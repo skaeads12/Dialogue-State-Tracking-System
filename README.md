@@ -1,13 +1,56 @@
 # Dialogue-State-Tracking-System
 ## 프로젝트 소개
 
-이 저장소는 KLUE-WoS 데이터셋을 바탕으로 DST(Dialogue State Tracking) 시스템을 구현하였습니다. DST를 구현하기 위해 사용한 모델은 다음과 같습니다.
+본 저장소는 KLUE-WoS 데이터셋을 바탕으로 DST(Dialogue State Tracking) 시스템을 구현하였습니다. DST를 구현하기 위해 사용한 모델은 다음과 같습니다.
 
 - BERT
 - RoBERTa
 - ELECTRA
 
 3가지 모델은 Feature Extraction을 제외한 모든 모듈이 동일한 구성을 가지고 있으며, 모두 End-to-End로 구현되었습니다.
+
+## 사용 방법
+
+본 저장소에는 데이터셋이 포함되어있지 않습니다. 데이터셋은 https://github.com/KLUE-benchmark/KLUE/tree/main에서 WoS(Wizard of Seoul)을 참조해주세요.
+실험에 사용한 파일의 트리 구조는 다음과 같습니다.
+
+```
+.
+└── data
+    ├── train.json
+    ├── eval.json
+    └── ontology.json
+```
+
+다음 명령어는 학습에 사용됩니다.
+
+```console
+
+python train.py -td data/train.json \      # train set dir
+                -ed data/eval.json \       # develop set dir
+                -od data/ontology.json \   # ontology dir
+                -sd bert-result/ \         # save dir
+                -pt klue/bert-base \       # pretrained tokenizer
+                -pm klue/bert-base \       # pretrained model
+                -e 3 \                     # num of epochs
+                -b 64 \                    # batch size
+                -ml 512                    # max length
+
+```
+
+다음 명령어는 시험에 사용됩니다. 본 실험에서는 WoS 데이터의 검증 데이터를 사용했습니다.
+
+```console
+
+python predict.py -td data/eval.json \                # test set dir
+                  -od data/ontology.json \            # ontology dir
+                  -sd bert-predictions.json \         # save dir
+                  -pt bert-result/checkpoint-2757 \   # pretrained tokenizer
+                  -pm bert-result/checkpoint-2757 \   # pretrained model
+                  -b 64 \                             # batch size
+                  -ml 512                             # max length
+
+```
 
 ## 모델 구조
 
@@ -52,4 +95,3 @@ Span Predictor는 일반적인 Span Prediction 방법에 따라 구현되었습�
 ### 모델 구조도
 
 ![dst](https://github.com/skaeads12/Dialogue-State-Tracking-System/assets/45366231/3c3f350c-9c9b-4a27-9b4c-78821ffe1015)
-
