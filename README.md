@@ -95,3 +95,7 @@ Span Predictor는 일반적인 Span Prediction 방법에 따라 구현되었습�
 ### 모델 구조도
 
 ![dst](https://github.com/skaeads12/Dialogue-State-Tracking-System/assets/45366231/3c3f350c-9c9b-4a27-9b4c-78821ffe1015)
+
+## LICENSE
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
